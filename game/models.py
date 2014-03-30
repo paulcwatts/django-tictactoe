@@ -1,4 +1,5 @@
 from collections import Counter
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -38,6 +39,9 @@ class Game(models.Model):
 
     def __unicode__(self):
         return '{0} vs {1}, state="{2}"'.format(self.player_x, self.player_o, self.board)
+
+    def get_absolute_url(self):
+        return reverse('game:detail', kwargs={'pk': self.pk})
 
     @property
     def next_player(self):
