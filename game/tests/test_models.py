@@ -1,3 +1,4 @@
+import random
 from django.test import TestCase
 
 from game.models import Game
@@ -36,6 +37,29 @@ class GameModelTest(TestCase):
             game.play(-1)
             game.play(9)
             game.play(10)
+
+    def test_play_auto_human_computer(self):
+        "At the start of the game, human starts."
+        game = Game(player_x='human', player_o='game.players.RandomPlayer')
+        game.play_auto()
+        self.assertEqual(game.board, "         ")
+        self.assertEqual(game.next_player, "X")
+
+    def test_play_auto_computer_human(self):
+        "At the start of the game, computer starts."
+        random.seed(0)
+        game = Game(player_o='human', player_x='game.players.RandomPlayer')
+        game.play_auto()
+        self.assertEqual(game.board, "       X ")
+        self.assertEqual(game.next_player, "O")
+
+    def test_play_auto_computer_to_computer(self):
+        "Two computers playing against themselves."
+        random.seed(0)
+        game = Game(player_o='game.players.RandomPlayer', player_x='game.players.RandomPlayer')
+        game.play_auto()
+        self.assertEqual(game.board, "OOXOX OXX")
+        self.assertEqual(game.is_game_over, 'O')
 
     def test_game_over(self):
         "Runs through a bunch of board states, with the expected result."

@@ -110,3 +110,17 @@ class Game(models.Model):
         board = list(self.board)
         board[index] = self.next_player
         self.board = u''.join(board)
+
+    def play_auto(self):
+        """Plays for any artificial/computers players.
+        Returns when the computer players have played or the game is over."""
+        from .players import get_player
+
+        while not self.is_game_over:
+            next = self.next_player
+            player = self.player_x if next == 'X' else self.player_o
+            if player == 'human':
+                return
+
+            player_obj = get_player(player)
+            self.play(player_obj.play(self))

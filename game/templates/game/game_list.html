@@ -1,4 +1,11 @@
 {% extends "base.html" %}
 {% block body %}
-    Index list
+    <h1>Tic-Tac-Toe</h1>
+    <p>Would you like to play a game?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input name="player1" type="hidden" value="human"/>
+        <input name="player2" type="hidden" value="game.players.RandomPlayer"/>
+        <button type="submit">Play against a dumb computer</button>
+    </form>
 {% endblock %}
