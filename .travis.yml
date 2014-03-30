@@ -2,9 +2,9 @@ language: python
 python:
   - "2.7"
 env:
-  - DJANGO="django==1.6.2"
+  - TOX_ENV=py2.7-django1.6
+  - TOX_ENV=flake8
 install:
-  - pip install $DJANGO
-  - pip install -r requirements.txt
+  - pip install tox==1.7.0
 script:
-  - python manage.py test
+  - tox -e $TOX_ENV
