@@ -1,0 +1,4 @@
+*.swp
+*.pyc
+.idea/
+db.sqlite3
