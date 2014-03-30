@@ -5,36 +5,32 @@ from game.models import Game
 
 class GameModelTest(TestCase):
     def test_play_first(self):
-        """
-        X always goes first
-        """
+        "X always goes first"
+
         game = Game()
         game.play(0)
         self.assertEqual(game.board, "X        ")
         self.assertEqual(game.next_player, "O")
 
     def test_play_second(self):
-        """
-        The second play is O
-        """
+        "The second play is O"
+
         game = Game(board="X        ")
         game.play(1)
         self.assertEqual(game.board, "XO       ")
         self.assertEqual(game.next_player, "X")
 
     def test_play_error_square_taken(self):
-        """
-        You can't play a square that is taken.
-        """
+        "You can't play a square that is taken."
+
         game = Game(board="XOX      ")
         with self.assertRaises(ValueError):
             game.play(1)
             game.play(2)
 
     def test_play_error_index(self):
-        """
-        You can't pass in an invalid index.
-        """
+        "You can't pass in an invalid index."
+
         game = Game()
         with self.assertRaises(IndexError):
             game.play(-1)
@@ -42,9 +38,8 @@ class GameModelTest(TestCase):
             game.play(10)
 
     def test_game_over(self):
-        """
-        Runs through a bunch of board states, with the expected result.
-        """
+        "Runs through a bunch of board states, with the expected result."
+
         states = [
             ("         ", None),  # Initial state
             ("X        ", None),  # First play

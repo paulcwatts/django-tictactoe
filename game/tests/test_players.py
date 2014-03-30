@@ -11,9 +11,8 @@ class RandomPlayerTest(TestCase):
         self.assertEqual(type(p), RandomPlayer)
 
     def test_random(self):
-        """
-        Basic testing.
-        """
+        "Basic testing."
+
         random.seed(0)  # For testing
         game = Game()
         p1 = RandomPlayer()
@@ -22,9 +21,8 @@ class RandomPlayerTest(TestCase):
         self.assertEqual(game.board, "       X ")
 
     def test_play_to_end(self):
-        """
-        Play two random players against each other.
-        """
+        "Play two random players against each other."
+
         random.seed(0)  # For testing
         game = Game()
         p1 = RandomPlayer()
