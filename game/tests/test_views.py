@@ -24,17 +24,17 @@ class ViewsTest(TestCase):
         random.seed(0)
 
         response = self.client.post(reverse('game:index'), {
-            'player1': 'human',
-            'player2': 'game.players.RandomPlayer'
+            'player1': 'game.players.RandomPlayer',
+            'player2': 'human'
         })
         self.assertEqual(Game.objects.count(), 1)
         game = Game.objects.all()[0]
         self.assertRedirects(response, game.get_absolute_url())
-        self.assertEqual(game.board, "         ")
 
-        # Players are assigned.
-        self.assertEqual(game.player_x, 'human')
-        self.assertEqual(game.player_o, 'game.players.RandomPlayer')
+        # Players are assigned. The player should have played.
+        self.assertEqual(game.board, "      X  ")
+        self.assertEqual(game.player_x, 'game.players.RandomPlayer')
+        self.assertEqual(game.player_o, 'human')
 
     def test_detail(self):
         "Views the game detail page."
@@ -42,3 +42,16 @@ class ViewsTest(TestCase):
         game = Game.objects.create()
         response = self.client.get(game.get_absolute_url())
         self.assertTemplateUsed(response, 'game/game_detail.html')
+
+    def test_detail_post(self):
+        "Posting to the detail view plays a square."
+        random.seed(0)
+
+        game = Game.objects.create(player_x='human', player_o='game.players.RandomPlayer')
+        response = self.client.post(game.get_absolute_url(), {
+            'index': 0
+        })
+        self.assertTemplateUsed(response, 'game/game_detail.html')
+        # Reload the game. Both the human and random player should have played.
+        game = Game.objects.get(pk=game.pk)
+        self.assertEqual(game.board, "X      O ")

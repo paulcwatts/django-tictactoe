@@ -28,3 +28,7 @@ class NewGameForm(forms.Form):
         random.shuffle(players)
         return Game.objects.create(player_x=players[0],
                                    player_o=players[1])
+
+
+class PlayForm(forms.Form):
+    index = forms.IntegerField(min_value=0, max_value=8)
