@@ -51,7 +51,7 @@ class ViewsTest(TestCase):
         response = self.client.post(game.get_absolute_url(), {
             'index': 0
         })
-        self.assertTemplateUsed(response, 'game/game_detail.html')
+        self.assertRedirects(response, game.get_absolute_url())
         # Reload the game. Both the human and random player should have played.
         game = Game.objects.get(pk=game.pk)
         self.assertEqual(game.board, "X      O ")
