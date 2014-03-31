@@ -33,6 +33,11 @@ def game(request, pk):
             game.play(form.cleaned_data['index'])
             game.play_auto()
             game.save()
+            # Redirect to the same URL so we don't get resubmission warnings.
+            # This is a relatively dumb UI; what you would really
+            # want to do is have a front-end UI that does requests via
+            # AJAX (jQuery or Ember)
+            return redirect(game)
         else:
             # What to do? This is a programmer error for now.
             pass
