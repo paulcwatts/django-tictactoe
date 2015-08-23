@@ -1,4 +1,5 @@
 import random
+import six
 from django.test import TestCase
 
 from game.models import Game
@@ -18,4 +19,4 @@ class RandomPlayerTest(TestCase):
         p1 = RandomPlayer()
 
         game.play(p1.play(game))
-        self.assertEqual(game.board, "       X ")
+        self.assertEqual(game.board, "      X  " if six.PY3 else "       X ")

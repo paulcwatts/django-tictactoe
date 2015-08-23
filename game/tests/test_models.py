@@ -1,4 +1,5 @@
 import random
+import six
 from django.test import TestCase
 
 from game.models import Game
@@ -50,7 +51,7 @@ class GameModelTest(TestCase):
         random.seed(0)
         game = Game(player_o='human', player_x='game.players.RandomPlayer')
         game.play_auto()
-        self.assertEqual(game.board, "       X ")
+        self.assertEqual(game.board, "      X  " if six.PY3 else "       X ")
         self.assertEqual(game.next_player, "O")
 
     def test_play_auto_computer_to_computer(self):
@@ -58,7 +59,7 @@ class GameModelTest(TestCase):
         random.seed(0)
         game = Game(player_o='game.players.RandomPlayer', player_x='game.players.RandomPlayer')
         game.play_auto()
-        self.assertEqual(game.board, "OOXOX OXX")
+        self.assertEqual(game.board, "X XOOOXOX" if six.PY3 else "OOXOX OXX")
         self.assertEqual(game.is_game_over, 'O')
 
     def test_game_over(self):
