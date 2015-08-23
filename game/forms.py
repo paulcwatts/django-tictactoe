@@ -12,7 +12,7 @@ def validate_player_type(player_type):
         return True
     try:
         return get_player(player_type) is not None
-    except ImproperlyConfigured:
+    except (ImproperlyConfigured, ImportError):
         raise ValidationError("Unknown player type: " + player_type)
 
 

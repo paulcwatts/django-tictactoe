@@ -1,8 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'game.views',
-    url(r'^$', 'index', name='index'),
-    url(r'^(?P<pk>\d+)/$', 'game', name='detail')
-)
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<pk>\d+)/$', views.game, name='detail')
+]

@@ -6,7 +6,7 @@ allowed to perform any illegal actions).
 They are expected to return an index that is their play.
 """
 import random
-from django.utils.module_loading import import_by_path
+from django.utils.module_loading import import_string
 
 
 class RandomPlayer(object):
@@ -29,5 +29,5 @@ def get_player(player_type):
     Since we don't have that many player types, you could hardcode types
     as well.
     """
-    cls = import_by_path(player_type)
+    cls = import_string(player_type)
     return cls()
